@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>更省心：规则一改，引用全找齐</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+      body {
+        background: #f8faff;
+        color: #12181c;
+        font-family: "Shopee2021", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      }
+      .viewport {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+      }
+      .stage {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 2048px;
+        height: 1336px;
+        overflow: hidden;
+        border-radius: 24px;
+        background: #f8faff;
+        transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+        transform-origin: center;
+      }
+      .showcase-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1315px;
+        height: 1110px;
+        transform: translate(-50%, -50%);
+      }
+      .module-one,
+      .module-two {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .title-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+      .title-icon {
+        width: 24.375px;
+        height: 24.375px;
+        flex: 0 0 auto;
+      }
+      h1 {
+        margin: 0;
+        color: #12181c;
+        font-size: 48px;
+        font-weight: 600;
+        line-height: 1.25;
+        white-space: nowrap;
+      }
+      .subtitle {
+        margin: 18px 0 0;
+        color: rgba(18, 24, 28, 0.55);
+        font-family: Poppins, "PingFang SC", "Microsoft YaHei", sans-serif;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 36px;
+        text-align: center;
+        white-space: nowrap;
+      }
+      .module-two { margin-top: 68px; }
+      .demo-frame {
+        width: 1315px;
+        height: 840px;
+        overflow: hidden;
+        border: 4px solid #424242;
+        border-radius: 24px;
+        background: #f7f7f7;
+      }
+      #batch-demo {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #f7f7f7;
+        pointer-events: none;
+        touch-action: none;
+        user-select: none;
+      }
+      .demo-play {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 24px;
+        padding: 12px 24px;
+        border: 2px solid #fff;
+        border-radius: 64px;
+        background: linear-gradient(134.26deg, #fff 15.92%, rgba(255,255,255,.58) 43.07%);
+        color: #12181c;
+        cursor: pointer;
+        appearance: none;
+      }
+      .demo-play:hover { background: #fff; }
+      .demo-play:focus-visible { outline: 2px solid #ee4d2d; outline-offset: 3px; }
+      .demo-play__content { display: flex; align-items: center; gap: 8px; }
+      .demo-play__label { font-size: 24px; font-weight: 400; line-height: 36px; white-space: nowrap; }
+      .demo-play__icon {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        flex: 0 0 auto;
+        border: 0;
+        border-radius: 50%;
+        background: #2460ff;
+      }
+      .demo-play__icon::after {
+        position: absolute;
+        top: 50%;
+        left: 52%;
+        width: 0;
+        height: 0;
+        content: "";
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-left: 9px solid #fff;
+        transform: translate(-35%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="viewport">
+      <section class="stage" aria-label="批量更新 Function 和 Workflow 方案展示">
+        <div class="showcase-content">
+          <section class="module-one" aria-label="方案标题">
+            <div class="title-row">
+              <svg class="title-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <defs>
+                  <linearGradient id="title-spark-gradient" x1="12" y1="0" x2="12" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#ee4d2d" />
+                    <stop offset="1" stop-color="#fc8f09" />
+                  </linearGradient>
+                </defs>
+                <path d="M12.19 19.29l-.7 2.81c-.08.33-.55.33-.63 0l-.7-2.81C9.28 15.79 6.55 13.06 3.06 12.19l-2.81-.7c-.33-.08-.33-.55 0-.63l2.81-.7c3.49-.87 6.22-3.6 7.09-7.09l.7-2.81c.08-.33.55-.33.63 0l.7 2.81c.87 3.49 3.6 6.22 7.09 7.09l2.81.7c.33.08.33.55 0 .63l-2.81.7c-3.49.87-6.22 3.6-7.09 7.09Z" fill="url(#title-spark-gradient)" />
+              </svg>
+              <h1>更省心：规则一改，引用全找齐</h1>
+            </div>
+            <p class="subtitle">输入指令，“AI同事”帮你搞定所有</p>
+          </section>
+          <section class="module-two" aria-label="Demo 展示区">
+            <div class="demo-frame">
+              <iframe id="batch-demo" title="批量更新 Function 和 Workflow 自动演示" src="demo.html?showcase=1" tabindex="-1"></iframe>
+            </div>
+            <button class="demo-play" id="demo-control" type="button" aria-label="暂停 Demo" aria-pressed="false">
+              <span class="demo-play__content">
+                <span class="demo-play__label">Demo 展示</span>
+                <span class="demo-play__icon" aria-hidden="true"></span>
+              </span>
+            </button>
+          </section>
+        </div>
+      </section>
+    </main>
+    <script>
+      (() => {
+        const DESIGN_WIDTH = 2048;
+        const DESIGN_HEIGHT = 1336;
+        const stage = document.querySelector(".stage");
+        const iframe = document.querySelector("#batch-demo");
+        const control = document.querySelector("#demo-control");
+        let isPaused = false;
+        let loopRestartTimer = null;
+
+        const clearLoopRestart = () => {
+          if (loopRestartTimer !== null) {
+            window.clearTimeout(loopRestartTimer);
+            loopRestartTimer = null;
+          }
+        };
+
+        const resizeStage = () => {
+          const scale = Math.min(window.innerWidth / DESIGN_WIDTH, window.innerHeight / DESIGN_HEIGHT);
+          stage.style.setProperty("--stage-scale", String(scale));
+        };
+
+        const setPauseLabel = () => {
+          control.setAttribute("aria-label", isPaused ? "重新播放 Demo" : "暂停 Demo");
+          control.setAttribute("aria-pressed", String(isPaused));
+        };
+
+        const pauseDemo = () => {
+          if (isPaused) return;
+          clearLoopRestart();
+          isPaused = true;
+          setPauseLabel();
+          iframe.contentWindow?.postMessage({ type: "batch-showcase-pause" }, "*");
+        };
+
+        const restartDemo = () => {
+          clearLoopRestart();
+          isPaused = false;
+          setPauseLabel();
+          iframe.src = "demo.html?showcase=1&replay=" + Date.now();
+        };
+
+        window.addEventListener("resize", resizeStage);
+        window.addEventListener("message", (event) => {
+          if (event.source !== iframe.contentWindow) return;
+          if (event.data?.type !== "batch-showcase-complete" || isPaused) return;
+          clearLoopRestart();
+          loopRestartTimer = window.setTimeout(() => {
+            if (!isPaused) restartDemo();
+          }, 3000);
+        });
+        control.addEventListener("click", () => {
+          if (isPaused) {
+            restartDemo();
+            return;
+          }
+          pauseDemo();
+        });
+
+        resizeStage();
+        setPauseLabel();
+      })();
+    </script>
+  </body>
+</html>
