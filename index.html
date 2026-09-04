@@ -196,15 +196,7 @@
           )
           .replaceAll('window.history.pushState(null,"",t)', "void 0");
         let isPaused = false;
-        let loopRestartTimer = null;
         let replayCount = 0;
-
-        const clearLoopRestart = () => {
-          if (loopRestartTimer !== null) {
-            window.clearTimeout(loopRestartTimer);
-            loopRestartTimer = null;
-          }
-        };
 
         const resizeStage = () => {
           const scale = Math.min(window.innerWidth / DESIGN_WIDTH, window.innerHeight / DESIGN_HEIGHT);
@@ -218,14 +210,12 @@
 
         const pauseDemo = () => {
           if (isPaused) return;
-          clearLoopRestart();
           isPaused = true;
           setPauseLabel();
           iframe.contentWindow?.postMessage({ type: "batch-showcase-pause" }, "*");
         };
 
         const restartDemo = () => {
-          clearLoopRestart();
           isPaused = false;
           setPauseLabel();
           replayCount += 1;
@@ -233,14 +223,6 @@
         };
 
         window.addEventListener("resize", resizeStage);
-        window.addEventListener("message", (event) => {
-          if (event.source !== iframe.contentWindow) return;
-          if (event.data?.type !== "batch-showcase-complete" || isPaused) return;
-          clearLoopRestart();
-          loopRestartTimer = window.setTimeout(() => {
-            if (!isPaused) restartDemo();
-          }, 3000);
-        });
         control.addEventListener("click", () => {
           if (isPaused) {
             restartDemo();
