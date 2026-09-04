@@ -176,7 +176,20 @@
         const demoHtml = new TextDecoder().decode(
           Uint8Array.from(atob(DEMO_BASE64), (character) => character.charCodeAt(0)),
         );
+        const focusGuard = `
+          <script>
+            (() => {
+              const suppressFocus = () => {};
+              HTMLElement.prototype.focus = suppressFocus;
+              if (typeof SVGElement !== "undefined" && SVGElement.prototype.focus) {
+                SVGElement.prototype.focus = suppressFocus;
+              }
+              window.focus = suppressFocus;
+            })();
+          <\/script>
+        `;
         const embeddedDemoHtml = demoHtml
+          .replace("<head>", "<head>" + focusGuard)
           .replaceAll(
             "new URLSearchParams(window.location.search).get('showcase') === '1'",
             "true",
