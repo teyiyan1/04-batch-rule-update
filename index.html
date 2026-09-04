@@ -153,7 +153,7 @@
           </section>
           <section class="module-two" aria-label="Demo 展示区">
             <div class="demo-frame">
-              <iframe id="batch-demo" title="批量更新 Function 和 Workflow 自动演示" src="demo.html?showcase=1" tabindex="-1"></iframe>
+              <iframe id="batch-demo" title="批量更新 Function 和 Workflow 自动演示" tabindex="-1"></iframe>
             </div>
             <button class="demo-play" id="demo-control" type="button" aria-label="暂停 Demo" aria-pressed="false">
               <span class="demo-play__content">
@@ -172,8 +172,16 @@
         const stage = document.querySelector(".stage");
         const iframe = document.querySelector("#batch-demo");
         const control = document.querySelector("#demo-control");
+        const showcaseVersion = new URLSearchParams(window.location.search).get("v");
         let isPaused = false;
         let loopRestartTimer = null;
+
+        const getDemoUrl = (replayToken) => {
+          const params = new URLSearchParams({ showcase: "1" });
+          if (showcaseVersion) params.set("v", showcaseVersion);
+          if (replayToken) params.set("replay", replayToken);
+          return `demo.html?${params.toString()}`;
+        };
 
         const clearLoopRestart = () => {
           if (loopRestartTimer !== null) {
@@ -204,7 +212,7 @@
           clearLoopRestart();
           isPaused = false;
           setPauseLabel();
-          iframe.src = "demo.html?showcase=1&replay=" + Date.now();
+          iframe.src = getDemoUrl(String(Date.now()));
         };
 
         window.addEventListener("resize", resizeStage);
@@ -224,6 +232,7 @@
           pauseDemo();
         });
 
+        iframe.src = getDemoUrl();
         resizeStage();
         setPauseLabel();
       })();
