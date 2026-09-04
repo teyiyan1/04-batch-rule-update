@@ -180,9 +180,14 @@
           <script>
             (() => {
               const suppressFocus = () => {};
+              const suppressViewportMovement = () => {};
               HTMLElement.prototype.focus = suppressFocus;
               if (typeof SVGElement !== "undefined" && SVGElement.prototype.focus) {
                 SVGElement.prototype.focus = suppressFocus;
+              }
+              Element.prototype.scrollIntoView = suppressViewportMovement;
+              if (HTMLElement.prototype.scrollIntoViewIfNeeded) {
+                HTMLElement.prototype.scrollIntoViewIfNeeded = suppressViewportMovement;
               }
               window.focus = suppressFocus;
             })();
