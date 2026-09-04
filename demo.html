@@ -1870,7 +1870,6 @@ Add the applicable source or paste the confirmed rule.`:"Add the applicable poli
           started = true;
           const input = await waitFor(() => document.querySelector('textarea[aria-label="Ask KMS Assistant"]'));
           if (!input) return;
-          input.focus({ preventScroll: true });
           const typingCompleted = await typeReactInputValue(input, QUERY);
           if (!typingCompleted || typingPaused) return;
           await sleep(400);
